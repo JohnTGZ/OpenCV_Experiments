@@ -1,3 +1,15 @@
+#videos and images
+samples
+samples2
+samples_vid1
+spotit3d
+papers
+output
+
+#video files
+*.mp4
+*.avi
+
 # Prerequisites
 *.d
 
