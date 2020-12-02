@@ -2,18 +2,16 @@ import cv2
 import numpy as np
 import argparse
 
-s
 
-def openingMorph():
+# def openingMorph():
 
-def morphEx():
+# def morphEx():
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument("--input", default= "spotit3d/A1.mp4" )
   parser.add_argument("--algo", default="KNN")
   parser.add_argument("--output", default="default_output.mp4")
-
   args = parser.parse_args()
 
   #capture video
@@ -24,38 +22,74 @@ if __name__ == "__main__":
 
   #Resize the video
   SCALE_FACTOR = 0.6
-  FPS = cap.get(CV_CAP_PROP_FPS)
-  WIDTH = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))  
-  HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)) 
+  FPS = (cap.get(cv2.CAP_PROP_FPS))
+  RESIZED_WIDTH = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH) * SCALE_FACTOR)  
+  RESIZED_HEIGHT = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT) * SCALE_FACTOR) 
   
   #video writer
-  out = cv2.VideoWriter("output/"+args.output, cv2.VideoWriter_fourcc(*'h264'),
-                        FPS, (FRAME_WIDTH, FRAME_HEIGHT*2))
+  #if grayscale, then set last parameter to false
+  out = cv2.VideoWriter("output/"+args.output, 0x00000021,
+                        FPS, (RESIZED_WIDTH, RESIZED_HEIGHT), True)
 
-  while (cap.isOpened()):
+  #Background Subtraction
+  bgs = cv2.createBackgroundSubtractorKNN(history=int(5*FPS), dist2Threshold=300/SCALE_FACTOR , detectShadows = False)
+
+  while (True):
     ret, frame = cap.read()
-    if ret == True:
-      #Display the resulting frame
-      cv2.imshow('Frame', frame)
+    if ret == False:
+      break
+    else:
+      # Resize video
+      frame_resized = cv2.resize(frame, (RESIZED_WIDTH, RESIZED_HEIGHT), 0, 0, cv2.INTER_CUBIC )
+      
+      # White balance on color image
+      wb = cv2.xphoto.createGrayworldWB()
+      wb.setSaturationThreshold(1.0)
+      frame_wb	=	wb.balanceWhite(frame_resized)
 
-      #2. convert to grayscale
+      # Convert from color to grayscale
+      frame_gray = cv2.cvtColor(frame_wb, cv2.COLOR_BGR2GRAY)
+      # Gaussian blur
+      frame_gray_blur = cv2.GaussianBlur(frame_gray, (5,5), 0)
 
-      #3. Gaussian blur
+      frame_final = frame_gray_blur
+
+      #Preprocessing 
+      #lux meter to detect the brightness of the sky
+      #contrast adjustment using kotera's method
+      #rotation + translation compensation
 
       #4. Background subtraction via KNN
+      fgMask = bgs.apply(frame_final)
 
       #5. Opening (individual erosion then dilation)
 
       #6. Blob detection
+      keypoints = blobdetector.detect(fgMask)
+      frame_resized_with_keypoints = cv.drawKeypoints(frame_resized, keypoints, np.array([]),
+                                          (0,0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
 
-      #7. Mask keypoints on image 
+      #7. Mask keypoints on image and add frame number information
+      cv2.rectangle( frame_resized, (10,2), (100, 20), (255, 255, 255), -1 )
+      cv2.putText( frame_resized, str(cap.get(cv2.CAP_PROP_POS_FRAMES)), (15, 15),
+                  cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0,0,0) )
 
-      #Press Q on keyboard to exit
-      if cv2.waitKey(0) & 0xFF==ord('q'):
+      cv2.imshow('frame_resized_with_keypoints', frame_resized_with_keypoints )
+      cv2.imshow('frame_wb', frame_wb)
+      # cv2.imshow('frame_final', frame_final)
+      cv2.imshow('fgMask', fgMask)
+
+      cv2.moveWindow('frame_resized', 0, 25)
+      cv2.moveWindow('frame_wb', 1150, 25)
+      cv2.moveWindow('fgMask', 2300, 25)
+
+      #Output video
+      out.write(frame_resized_with_keypoints)
+
+      if cv2.waitKey(10) & 0xFF==ord('q'):
         break
-    else:
-      break
 
+  #release all video files
   cap.release()
-
+  out.release()
   cv2.destroyAllWindows()
