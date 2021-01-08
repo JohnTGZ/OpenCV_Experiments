@@ -1,3 +1,9 @@
 {
-  "python.pythonPath": "/home/john/anaconda3/envs/drone_tracking/bin/python"
+  "python.pythonPath": "/home/john/anaconda3/envs/drone_tracking/bin/python",
+  "files.associations": {
+    "functional": "cpp",
+    "istream": "cpp",
+    "memory": "cpp",
+    "tuple": "cpp"
+  }
 }

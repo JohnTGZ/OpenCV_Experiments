@@ -48,24 +48,13 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/john/Documents/CODE/opencv
+CMAKE_SOURCE_DIR = /home/john/Documents/CODE/DroneTracking
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/john/Documents/CODE/opencv
+CMAKE_BINARY_DIR = /home/john/Documents/CODE/DroneTracking
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -78,11 +67,22 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/usr/bin/cmake-gui -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
+
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/john/Documents/CODE/opencv/CMakeFiles /home/john/Documents/CODE/opencv/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/john/Documents/CODE/DroneTracking/CMakeFiles /home/john/Documents/CODE/DroneTracking/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/john/Documents/CODE/opencv/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/john/Documents/CODE/DroneTracking/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,84 +111,84 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named tut1
+# Target rules for targets named aruco
 
 # Build rule for target.
-tut1: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 tut1
-.PHONY : tut1
+aruco: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 aruco
+.PHONY : aruco
 
 # fast build rule for target.
-tut1/fast:
-	$(MAKE) -f CMakeFiles/tut1.dir/build.make CMakeFiles/tut1.dir/build
-.PHONY : tut1/fast
+aruco/fast:
+	$(MAKE) -f CMakeFiles/aruco.dir/build.make CMakeFiles/aruco.dir/build
+.PHONY : aruco/fast
 
 #=============================================================================
-# Target rules for targets named ceres_tut
+# Target rules for targets named rs_tut
 
 # Build rule for target.
-ceres_tut: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 ceres_tut
-.PHONY : ceres_tut
+rs_tut: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 rs_tut
+.PHONY : rs_tut
 
 # fast build rule for target.
-ceres_tut/fast:
-	$(MAKE) -f CMakeFiles/ceres_tut.dir/build.make CMakeFiles/ceres_tut.dir/build
-.PHONY : ceres_tut/fast
+rs_tut/fast:
+	$(MAKE) -f CMakeFiles/rs_tut.dir/build.make CMakeFiles/rs_tut.dir/build
+.PHONY : rs_tut/fast
 
-ceres_tut.o: ceres_tut.cpp.o
+aruco.o: aruco.cpp.o
 
-.PHONY : ceres_tut.o
-
-# target to build an object file
-ceres_tut.cpp.o:
-	$(MAKE) -f CMakeFiles/ceres_tut.dir/build.make CMakeFiles/ceres_tut.dir/ceres_tut.cpp.o
-.PHONY : ceres_tut.cpp.o
-
-ceres_tut.i: ceres_tut.cpp.i
-
-.PHONY : ceres_tut.i
-
-# target to preprocess a source file
-ceres_tut.cpp.i:
-	$(MAKE) -f CMakeFiles/ceres_tut.dir/build.make CMakeFiles/ceres_tut.dir/ceres_tut.cpp.i
-.PHONY : ceres_tut.cpp.i
-
-ceres_tut.s: ceres_tut.cpp.s
-
-.PHONY : ceres_tut.s
-
-# target to generate assembly for a file
-ceres_tut.cpp.s:
-	$(MAKE) -f CMakeFiles/ceres_tut.dir/build.make CMakeFiles/ceres_tut.dir/ceres_tut.cpp.s
-.PHONY : ceres_tut.cpp.s
-
-tut1.o: tut1.cpp.o
-
-.PHONY : tut1.o
+.PHONY : aruco.o
 
 # target to build an object file
-tut1.cpp.o:
-	$(MAKE) -f CMakeFiles/tut1.dir/build.make CMakeFiles/tut1.dir/tut1.cpp.o
-.PHONY : tut1.cpp.o
+aruco.cpp.o:
+	$(MAKE) -f CMakeFiles/aruco.dir/build.make CMakeFiles/aruco.dir/aruco.cpp.o
+.PHONY : aruco.cpp.o
 
-tut1.i: tut1.cpp.i
+aruco.i: aruco.cpp.i
 
-.PHONY : tut1.i
+.PHONY : aruco.i
 
 # target to preprocess a source file
-tut1.cpp.i:
-	$(MAKE) -f CMakeFiles/tut1.dir/build.make CMakeFiles/tut1.dir/tut1.cpp.i
-.PHONY : tut1.cpp.i
+aruco.cpp.i:
+	$(MAKE) -f CMakeFiles/aruco.dir/build.make CMakeFiles/aruco.dir/aruco.cpp.i
+.PHONY : aruco.cpp.i
 
-tut1.s: tut1.cpp.s
+aruco.s: aruco.cpp.s
 
-.PHONY : tut1.s
+.PHONY : aruco.s
 
 # target to generate assembly for a file
-tut1.cpp.s:
-	$(MAKE) -f CMakeFiles/tut1.dir/build.make CMakeFiles/tut1.dir/tut1.cpp.s
-.PHONY : tut1.cpp.s
+aruco.cpp.s:
+	$(MAKE) -f CMakeFiles/aruco.dir/build.make CMakeFiles/aruco.dir/aruco.cpp.s
+.PHONY : aruco.cpp.s
+
+rs_tut.o: rs_tut.cpp.o
+
+.PHONY : rs_tut.o
+
+# target to build an object file
+rs_tut.cpp.o:
+	$(MAKE) -f CMakeFiles/rs_tut.dir/build.make CMakeFiles/rs_tut.dir/rs_tut.cpp.o
+.PHONY : rs_tut.cpp.o
+
+rs_tut.i: rs_tut.cpp.i
+
+.PHONY : rs_tut.i
+
+# target to preprocess a source file
+rs_tut.cpp.i:
+	$(MAKE) -f CMakeFiles/rs_tut.dir/build.make CMakeFiles/rs_tut.dir/rs_tut.cpp.i
+.PHONY : rs_tut.cpp.i
+
+rs_tut.s: rs_tut.cpp.s
+
+.PHONY : rs_tut.s
+
+# target to generate assembly for a file
+rs_tut.cpp.s:
+	$(MAKE) -f CMakeFiles/rs_tut.dir/build.make CMakeFiles/rs_tut.dir/rs_tut.cpp.s
+.PHONY : rs_tut.cpp.s
 
 # Help Target
 help:
@@ -196,16 +196,16 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
-	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... tut1"
-	@echo "... ceres_tut"
-	@echo "... ceres_tut.o"
-	@echo "... ceres_tut.i"
-	@echo "... ceres_tut.s"
-	@echo "... tut1.o"
-	@echo "... tut1.i"
-	@echo "... tut1.s"
+	@echo "... aruco"
+	@echo "... edit_cache"
+	@echo "... rs_tut"
+	@echo "... aruco.o"
+	@echo "... aruco.i"
+	@echo "... aruco.s"
+	@echo "... rs_tut.o"
+	@echo "... rs_tut.i"
+	@echo "... rs_tut.s"
 .PHONY : help
 
 
